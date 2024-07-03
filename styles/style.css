@@ -1,0 +1,19 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: auto;
+}
+
+#grid-container {
+    height: 642px;
+    width: 642px;
+    display: flex;
+    flex-wrap: wrap;
+}

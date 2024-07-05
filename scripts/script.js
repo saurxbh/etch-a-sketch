@@ -38,6 +38,7 @@ function drawGrid(dimension = 16) {
 
             // Add Hover effect
             cell.addEventListener('mouseover', hoverEffect);
+            cell.addEventListener('onclick', paintCell);
         }
     }
 }
@@ -49,3 +50,28 @@ function hoverEffect() {
         this.style.backgroundColor = 'white';
     })
 }
+
+function paintCell() {
+    this.style.backgroundColor = 'black';
+}
+
+// const resetButton = document.querySelector("#resize");
+// resetButton.addEventListener('onclick', resetGrid());
+function resetGrid() {
+    const allCells = document.querySelectorAll('.cell').forEach(cell => {
+        cell.style.backgroundColor = 'white';
+    })
+    let cellsPerSide = prompt("How many cells per side? (Max: 100)");
+    let numberCells = parseInt(cellsPerSide, 10);
+    if (isNaN(numberCells)) {
+        alert("You must enter a positive integer. (Max: 100)");
+        return;
+    } else if (numberCells < 0 || numberCells > 100) {
+        alert("You must enter a positive integer. (Max: 100)");
+        return;
+    }
+    // Delete all the divs from the main container
+    const grid_container = document.querySelector("#grid-container");
+    while (grid_container.firstChild) grid_container.removeChild(grid_container.firstChild);
+    drawGrid(numberCells);
+};

@@ -30,11 +30,24 @@ function drawGrid(dimension = 16) {
             // Create another attribute
             const widthHeightAttribute = document.createAttribute('style');
             // Set the value of the attribute
-            widthHeightAttribute.value = `width: ${cellWidth}; height: ${cellHeight}; border: 1px solid black;`;
+            widthHeightAttribute.value = `width: ${cellWidth}; height: ${cellHeight}; border: 1px solid black`;
             // Add the attribute
             cell.setAttributeNode(widthHeightAttribute);
             // Add the element to the DOM
             divArray[i].appendChild(cell);
+
+            // Add Hover effect
+            cell.addEventListener('mouseover', hoverEnterEffect);
+            cell.addEventListener('mouseout', hoverExitEffect)
         }
     }
+}
+
+// function for hover effect
+function hoverEnterEffect() {
+    this.style.backgroundColor = 'black';
+}
+
+function hoverExitEffect() {
+    this.style.backgroundColor = 'white';
 }

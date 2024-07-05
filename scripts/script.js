@@ -37,17 +37,15 @@ function drawGrid(dimension = 16) {
             divArray[i].appendChild(cell);
 
             // Add Hover effect
-            cell.addEventListener('mouseover', hoverEnterEffect);
-            cell.addEventListener('mouseout', hoverExitEffect)
+            cell.addEventListener('mouseover', hoverEffect);
         }
     }
 }
 
 // function for hover effect
-function hoverEnterEffect() {
+function hoverEffect() {
     this.style.backgroundColor = 'black';
-}
-
-function hoverExitEffect() {
-    this.style.backgroundColor = 'white';
+    this.addEventListener('mouseout', () =>{
+        this.style.backgroundColor = 'white';
+    })
 }

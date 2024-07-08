@@ -4,12 +4,8 @@ window.addEventListener('DOMContentLoaded', (event) =>{
 
 let mode = 'draw';
 let mouseDown = false;
-window.addEventListener('mousedown', () => {
-    mouseDown = true;
-})
-window.addEventListener('mouseup', () => {
-    mouseDown = false;
-})
+window.addEventListener('mousedown', () => mouseDown = true);
+window.addEventListener('mouseup', () => mouseDown = false);
 
 // function for drawing grid, default 16x16
 function drawGrid(dimension = 16) {
@@ -46,19 +42,17 @@ function drawGrid(dimension = 16) {
 
 // function for hover effect
 function hoverEffect(e) {
-    if (mouseDown === true) {
-        paintCell(e);
-    }
-    else {
-        e.target.style.backgroundColor = 'black';
-        e.target.addEventListener('transitionend', () => e.target.style.backgroundColor = 'white');
-    }
+    e.target.style.backgroundColor = 'black';
+    e.target.addEventListener('transitionend', () => e.target.style.backgroundColor = 'white');
 }
 
 function paintCell(e) {
     switch(mode) {
         case 'draw':
             e.target.style.backgroundColor = 'black';
+            break;
+        case 'erase':
+            e.target.style.backgroundColor = 'white';
             break;
     }
 }
@@ -81,3 +75,14 @@ function resetGrid() {
     while (grid_container.firstChild) grid_container.removeChild(grid_container.firstChild);
     drawGrid(numberCells);
 };
+
+function changeMode() {
+    const modeButton = document.querySelector('#erase');
+    if (modeButton.value === 'Erase') {
+        mode = 'erase';
+        modeButton.value = 'Draw';
+    } else {
+        mode = 'draw';
+        modeButton.value = 'Erase';
+    }
+}

@@ -2,6 +2,15 @@ window.addEventListener('DOMContentLoaded', (event) =>{
     drawGrid();
 });
 
+let mode = 'draw';
+let mouseDown = false;
+window.addEventListener('mousedown', () => {
+    mouseDown = true;
+})
+window.addEventListener('mouseup', () => {
+    mouseDown = false;
+})
+
 // function for drawing grid, default 16x16
 function drawGrid(dimension = 16) {
     // Calculate width and height of each cell in the grid
@@ -10,53 +19,50 @@ function drawGrid(dimension = 16) {
 
     // Container to display the grid
     const grid_container = document.querySelector('#grid-container');
-    let divArray = [];
 
-    // Iterate through loop for each row of the grid
-    for (let i = 0; i < dimension; i++) {
-        // Element for each row in the grid
-        divArray[i] = document.createElement('div');
-        grid_container.appendChild(divArray[i]);
-        // Iterate through the loop for each cell in each row
-        for (let j = 0; j < dimension; j++) {
-            // Element for each cell in the row
-            const cell = document.createElement('div');
-            // Create a class attribute
-            const classAttribute = document.createAttribute('class')
-            // Set the value of class attribute
-            classAttribute.value = 'cell';
-            // Add the attribute
-            cell.setAttributeNode(classAttribute);
-            // Create another attribute
-            const widthHeightAttribute = document.createAttribute('style');
-            // Set the value of the attribute
-            widthHeightAttribute.value = `width: ${cellWidth}; height: ${cellHeight}; border: 1px solid black`;
-            // Add the attribute
-            cell.setAttributeNode(widthHeightAttribute);
-            // Add the element to the DOM
-            divArray[i].appendChild(cell);
-
-            // Add Hover effect
-            cell.addEventListener('mouseover', hoverEffect);
-            cell.addEventListener('onclick', paintCell);
-        }
+    // Iterate through the loop for each cell in each row
+    for (let j = 0; j < dimension * dimension; j++) {
+        // Element for each cell in the row
+        const cell = document.createElement('div');
+        // Create a class attribute
+        const classAttribute = document.createAttribute('class')
+        // Set the value of class attribute
+        classAttribute.value = 'cell';
+        // Add the attribute
+        cell.setAttributeNode(classAttribute);
+        // Create another attribute
+        const widthHeightAttribute = document.createAttribute('style');
+        // Set the value of the attribute
+        widthHeightAttribute.value = `width: ${cellWidth}; height: ${cellHeight}; border: 1px solid black; background-color: white`;
+        // Add the attribute
+        cell.setAttributeNode(widthHeightAttribute);
+        // Add the element to the DOM
+        grid_container.appendChild(cell);
     }
+    const gridCells = document.querySelectorAll('.cell');
+    gridCells.forEach(gridCell => gridCell.addEventListener('mousedown', paintCell));
+    gridCells.forEach(gridCell => gridCell.addEventListener('mouseover', hoverEffect));
 }
 
 // function for hover effect
-function hoverEffect() {
-    this.style.backgroundColor = 'black';
-    this.addEventListener('mouseout', () =>{
-        this.style.backgroundColor = 'white';
-    })
+function hoverEffect(e) {
+    if (mouseDown === true) {
+        paintCell(e);
+    }
+    else {
+        e.target.style.backgroundColor = 'black';
+        e.target.addEventListener('transitionend', () => e.target.style.backgroundColor = 'white');
+    }
 }
 
-function paintCell() {
-    this.style.backgroundColor = 'black';
+function paintCell(e) {
+    switch(mode) {
+        case 'draw':
+            e.target.style.backgroundColor = 'black';
+            break;
+    }
 }
 
-// const resetButton = document.querySelector("#resize");
-// resetButton.addEventListener('onclick', resetGrid());
 function resetGrid() {
     const allCells = document.querySelectorAll('.cell').forEach(cell => {
         cell.style.backgroundColor = 'white';

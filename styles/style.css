@@ -8,6 +8,9 @@ body {
     justify-content: space-around;
     align-items: center;
 }
+#title-container {
+    height: 64px;
+}
 
 #grid-container {
     height: 642px;
@@ -20,7 +23,6 @@ body {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    height: 5rem;
 }
 
 .featurebutton {
@@ -30,4 +32,9 @@ body {
     margin: 1rem;
     background-color: white;
     width: 100px;
+    height: 40px;
+}
+
+.cell {
+    transition: all 0.2s;
 }
